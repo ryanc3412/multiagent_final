@@ -4,7 +4,7 @@ from itertools import permutations
 
 
 def generate_iac_voters(num_voters, candidates):
-    rankings = list(permutations(candidates))
+    rankings = list(permutations([i for i in range(candidates)]))
     num_rankings = len(rankings)
 
     counts = [0] * num_rankings
