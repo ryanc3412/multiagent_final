@@ -1,4 +1,5 @@
-# impartial anonymous culture
+
+
 import random
 from itertools import permutations
 
@@ -7,16 +8,15 @@ def generate_iac_voters(num_voters, candidates):
     rankings = list(permutations([i for i in range(candidates)]))
     num_rankings = len(rankings)
 
-    counts = [0] * num_rankings
-
-    for _ in range(num_voters):
-        chosen_index = random.choice(range(num_rankings))
-        counts[chosen_index] += 1
+    votes = [0] * (num_rankings + 1)
+    for i in range(1, num_rankings):
+        votes[i] = random.randint(0, num_voters)
+    votes[0] = 0
+    votes[num_rankings] = num_voters
+    votes.sort()
 
     result = []
     for i in range(num_rankings):
-        if counts[i] != 0:
-            result.append((rankings[i], counts[i]))
+        result.append((rankings[i], votes[i+1]-votes[i]))
 
     return result
-
