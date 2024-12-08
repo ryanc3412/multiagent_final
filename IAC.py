@@ -19,4 +19,3 @@ def generate_iac_voters(num_voters, candidates):
             result.append((rankings[i], counts[i]))
 
     return result
-
