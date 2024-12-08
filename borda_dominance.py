@@ -1,5 +1,7 @@
 # input: a list of tuples including rank and number of votes for given rank and a list of scoring vectors
-# return the candidates who are borda dominated
+
+# output: a lists of list where position index + 1 is the candidate
+# and items in index are dominated by that candidate
 
 def calculate_borda_dominance(voter_data, scoring_vectors):
     dominated = sorted(voter_data[0][0])
