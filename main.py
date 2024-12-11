@@ -22,6 +22,7 @@ def run_simulation(num_candidates, num_voters, voting_model, scoring_type, power
     precedence_table = buildPrecedenceTable(num_candidates, population)
     
     condorcet_winner, condorcet_loser, full_result = fullCondorcet(num_candidates, population)
+    print(full_result)
 
     borda_dominance = calculate_borda_dominance(population, [borda_vector])
     
@@ -41,7 +42,7 @@ def main():
     scoring_types = ['linear', 'inverse']
     powers = [1/3, 1/2, 1, CERVONE_CONSTANT, 2, 3]
     num_voters = 1000 
-    num_simulations = 10  # Number of times to repeat each experiment
+    num_simulations = 100  # Number of times to repeat each experiment
 
     #[Candidate Count - 3][Voting Model][Condorcet winner existance/Dominates/IsDominated][Domated/Dominating count]
     #For the third parameter, 0 is existance, 1 is domates, and 2 is being dominated
@@ -49,6 +50,7 @@ def main():
     borda_vs_condorcetLose = [[[[0 for _ in range(candidate_counts[-1])] for _ in range(3)] for _ in voting_models] for _ in candidate_counts]
     #[Candidate Count -3][Voting Model][Power][Linear/Inverse]
     vector_vs_condorcet = [[[[0 for _ in scoring_types] for _ in powers] for _ in voting_models] for _ in candidate_counts]
+    vector_vs_condorcetExist = [[[[0 for _ in scoring_types] for _ in powers] for _ in voting_models] for _ in candidate_counts]
     vector_vs_copeland = [[[[0 for _ in scoring_types] for _ in powers] for _ in voting_models] for _ in candidate_counts]
 
     # Nested loop to run all combinations
@@ -78,6 +80,7 @@ def main():
 
                         #Counts the number of condorcet winners
                         if condorcet_winners[i] != -1:
+                            vector_vs_condorcetExist[num_candidates-3][voting_models.index(voting_model)][powers.index(power)][scoring_types.index(scoring_type)] += 1
                             if borda_winners[i] == condorcet_winners[i]:
                                 vector_vs_condorcet[num_candidates-3][voting_models.index(voting_model)][powers.index(power)][scoring_types.index(scoring_type)] += 1
 
@@ -146,6 +149,36 @@ def main():
                     print("--", end="\t")
                 else:
                     print("%.2f" % (borda_vs_condorcetLose[i][j][1][k]/borda_vs_condorcetLose[i][j][0][0]), end="\t")
+            print()
+
+    print("Scoring Vectors vs Condorcet")
+    print("\t\tL/3\tI/3\tL/2\tI/2\tL\tI\tCv\tL2\tI2\tL3\tI3")
+    for i in range(len(candidate_counts)):
+        for j in range(len(voting_models)):
+            if j==2:
+                print("SPAT-"+str(candidate_counts[i]) +"\t\t", end="")
+            else:
+                print(voting_models[j]+"-"+str(candidate_counts[i]) +"\t\t", end="")
+            for k in range(len(powers)):
+                for l in range(len(scoring_types)):
+                    if k==3 and l ==1:
+                        continue
+                    print("%.2f" % (vector_vs_condorcet[i][j][k][l]/vector_vs_condorcetExist[i][j][k][l]), end="\t")
+            print()
+
+    print("Scoring Vectors vs Expected Copeland Deficiency")
+    print("\t\tL/3\tI/3\tL/2\tI/2\tL\tI\tCv\tL2\tI2\tL3\tI3")
+    for i in range(len(candidate_counts)):
+        for j in range(len(voting_models)):
+            if j==2:
+                print("SPAT-"+str(candidate_counts[i]) +"\t\t", end="")
+            else:
+                print(voting_models[j]+"-"+str(candidate_counts[i]) +"\t\t", end="")
+            for k in range(len(powers)):
+                for l in range(len(scoring_types)):
+                    if k==3 and l ==1:
+                        continue
+                    print("%.2f" % (vector_vs_copeland[i][j][k][l]/num_simulations), end="\t")
             print()
 
 if __name__ == "__main__":

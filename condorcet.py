@@ -52,6 +52,6 @@ def fullCondorcet(num_candidates, population):
         elif copeScores[i] == 1 - num_candidates:
             loser = i
     maxScore = max(copeScores)
-    return winner, loser, [x - maxScore for x in copeScores]
+    return winner, loser, [maxScore - x for x in copeScores]
 
 
