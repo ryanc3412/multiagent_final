@@ -114,7 +114,7 @@ def main():
                 print("SPAT-"+str(candidate_counts[i]) +"\t\t", end="")
             else:
                 print(voting_models[j]+"-"+str(candidate_counts[i]) +"\t\t", end="")
-            print("%.2f" % (borda_vs_condorcetWin[i][j][0][0]/(num_simulations* len(scoring_types) * len(powers))), end="\t")
+            print("%.2f" % (borda_vs_condorcetWin[i][j][0][0]/(num_simulations* (len(scoring_types) * len(powers) -1))), end="\t")
             for k in range(candidate_counts[-1]):
                 if k >=i+3:
                     print("--", end="\t")
@@ -126,7 +126,7 @@ def main():
                 else:
                     print("%.2f" % (borda_vs_condorcetWin[i][j][2][k]/borda_vs_condorcetWin[i][j][0][0]), end="\t")
             print()
-
+    print("Key: H - Chance of condorcet winner existing, J-i - Chance of a condorcet winner dominating i other candidates, given it exists, K-i - Chance of condorcet winner being dominated by i other candidates, given it exists")
     print()
     print("CONDORCET LOSER vs BORDA DOMINANCE")
     print("\t\tP\tQ-0\tQ-1\tQ-2\tQ-3\tQ-4\tQ-5\tR-0\tR-1\tR-2\tR-3\tR-4\tR-5")
@@ -136,7 +136,7 @@ def main():
                 print("SPAT-"+str(candidate_counts[i]) +"\t\t", end="")
             else:
                 print(voting_models[j]+"-"+str(candidate_counts[i]) +"\t\t", end="")
-            print("%.2f" % (borda_vs_condorcetLose[i][j][0][0]/(num_simulations* len(scoring_types) * len(powers))), end="\t")
+            print("%.2f" % (borda_vs_condorcetLose[i][j][0][0]/(num_simulations* (len(scoring_types) * len(powers) -1))), end="\t")
             for k in range(candidate_counts[-1]):
                 if k >=i+3:
                     print("--", end="\t")
@@ -148,7 +148,9 @@ def main():
                 else:
                     print("%.2f" % (borda_vs_condorcetLose[i][j][1][k]/borda_vs_condorcetLose[i][j][0][0]), end="\t")
             print()
-
+    print("Key: P - Chance of condorcet loser existing, Q-i - Chance of a condorcet loser being dominated by i other candidates, given it exists, R-i - Chance of condorcet loser dominating by i other candidates, given it exists")
+    print("\n")
+    print("Key: L - linear scoring vector, I - inverse scoring vector, Cv - Expanded Cervonce Scoring Vector, powers included with L and I")
     print("Scoring Vectors vs Condorcet")
     print("\t\tL/3\tI/3\tL/2\tI/2\tL\tI\tCv\tL2\tI2\tL3\tI3")
     for i in range(len(candidate_counts)):
