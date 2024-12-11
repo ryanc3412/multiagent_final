@@ -19,8 +19,6 @@ def run_simulation(num_candidates, num_voters, voting_model, scoring_type, power
     
     borda_winner = findBordaWinner(borda_vector, num_candidates, population)
     
-    precedence_table = buildPrecedenceTable(num_candidates, population)
-    
     condorcet_winner, condorcet_loser, full_result = fullCondorcet(num_candidates, population)
     print(full_result)
 
