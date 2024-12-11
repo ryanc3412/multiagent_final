@@ -20,7 +20,6 @@ def run_simulation(num_candidates, num_voters, voting_model, scoring_type, power
     borda_winner = findBordaWinner(borda_vector, num_candidates, population)
     
     condorcet_winner, condorcet_loser, full_result = fullCondorcet(num_candidates, population)
-    print(full_result)
 
     borda_dominance = calculate_borda_dominance(population, [borda_vector])
     
@@ -83,8 +82,6 @@ def main():
                                 vector_vs_condorcet[num_candidates-3][voting_models.index(voting_model)][powers.index(power)][scoring_types.index(scoring_type)] += 1
 
                             borda_vs_condorcetWin[num_candidates -3][voting_models.index(voting_model)][0][0] += 1
-                            print(num_candidates, voting_model)
-                            print(borda_vs_condorcetWin[num_candidates -3][voting_models.index(voting_model)][0][0])
                             borda_vs_condorcetWin[num_candidates -3][voting_models.index(voting_model)][1][len(borda_dominance_results[i][condorcet_winners[i]])] += 1
                             dominated_count = 0
                             for vector in borda_dominance_results[i]:
@@ -141,12 +138,12 @@ def main():
                 if k >=i+3:
                     print("--", end="\t")
                 else:
-                    print("%.2f" % (borda_vs_condorcetLose[i][j][2][k]/borda_vs_condorcetLose[i][j][0][0]), end="\t")
+                    print("%.2f" % (borda_vs_condorcetLose[i][j][1][k]/borda_vs_condorcetLose[i][j][0][0]), end="\t")
             for k in range(candidate_counts[-1]):
                 if k >=i+3:
                     print("--", end="\t")
                 else:
-                    print("%.2f" % (borda_vs_condorcetLose[i][j][1][k]/borda_vs_condorcetLose[i][j][0][0]), end="\t")
+                    print("%.2f" % (borda_vs_condorcetLose[i][j][2][k]/borda_vs_condorcetLose[i][j][0][0]), end="\t")
             print()
     print("Key: P - Chance of condorcet loser existing, Q-i - Chance of a condorcet loser being dominated by i other candidates, given it exists, R-i - Chance of condorcet loser dominating by i other candidates, given it exists")
     print("\n")
