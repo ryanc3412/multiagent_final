@@ -101,7 +101,7 @@ def main():
                             for vector in borda_dominance_results[i]:
                                 if (condorcet_losers[i]-1) in vector:
                                     dominated_count += 1
-                            borda_vs_condorcetWin[num_candidates -3][voting_models.index(voting_model)][2][dominated_count] += 1
+                            borda_vs_condorcetLose[num_candidates -3][voting_models.index(voting_model)][2][dominated_count] += 1
                 
                     print(f"Condorcet Winners: {condorcet_winners}")
                     print(f"Condorcet Losers: {condorcet_losers}")
