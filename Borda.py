@@ -18,4 +18,5 @@ def findBordaWinner(scoreVector, candidates, population):
         for i in range(candidates):
             scores[order[i]] += scoreVector[i] * groupSize
     winner = max([j for j in range(candidates)], key=lambda k: scores[k])
-    print("The winner is:", winner)
+    #print("The winner is:", winner)
+    return winner
